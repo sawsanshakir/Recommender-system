@@ -1,1 +1,7 @@
 # Recommender-system
+
+Recommender systems have advanced rapidly in many online businesses and there are many techniques used to build recommender systems but it is not easy to choose the method that performs best. 
+The aim of project is to compare recommender system algorithms by their performance which is carried out using three main evaluation measures, which are: prediction accuracy represented by mean absolute error and mean square root error, classification accuracy represented by precision - recall curve and true positive rate - false positive rate and finally, ranking accuracy represented by mean average precision, mean average recall, normalized discounted cumulative gain and coverage.
+Four common algorithms are reviewed and implemented which are user-based collaborative filtering, item-based collaborative filtering, singular value decomposition model-based and we tried to improve the user-based collaborative filtering by implementing a hybrid recommender system using demographic features of the users as an enhanced factor with rating similarity features. Two datasets have been used MovieLens ML-1m and Book-crossing.
+After implementing the project, it became clear that there is no particular algorithm that we can prove to be best among other techniques when applied to the two datasets, as we found out that the best technique is not only algorithm dependant but also dataset and domain dependant.
+
