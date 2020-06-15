@@ -1,0 +1,157 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+### Reference: https://github.com/statisticianinstilettos/recmetrics/blob/master/example.ipynb
+
+### ## compare the mean avarage precision at K=3,5,10,15,20,25 for the four algorithms
+
+UBCF_mapk= [0.6008830022075055, 0.5742154157468726, 0.563832891425518, 0.5660379038962019, 0.5695845758694403, 0.574111162034923]
+EUBCF_mapk= [0.6007818248712289, 0.5744376839587931, 0.5644569167776259, 0.5665515670914555, 0.5702160095139729, 0.5747002549175306]
+
+IBCF_mapk = [0.5115940029433407, 0.4853161791758646, 0.48326856270929996, 0.49148866065154667, 0.49991920749801155, 0.5080896913222194]
+SVD_mapk = [0.5279157468727005, 0.4960475073583517, 0.4900340683029405, 0.49632093149688833, 0.5026707717613472, 0.5084805177021837]
+
+
+import matplotlib.pyplot as plt
+import recmetrics
+
+
+mapk_scores = [UBCF_mapk, EUBCF_mapk, IBCF_mapk ,SVD_mapk]
+index = [3, 5,10, 15, 20, 25]
+names = ['UBCF_mapk ', 'EUBCF_mapk', 'IBCF_mapk', 'SVD_mapk']
+
+fig = plt.figure(figsize=(15, 7))
+recmetrics.mapk_plot(mapk_scores, model_names=names, k_range=index)
+
+
+# In[3]:
+
+
+## ### Reference: https://github.com/statisticianinstilettos/recmetrics/blob/master/example.ipynb
+## compare the mean avarage recall at K=3,5,10,15,20,25 for the four algorithms
+
+UBCF_mark= [0.14066476799510305, 0.21217966530811386, 0.3344232776806091, 0.40359104063619206, 0.4489822230580556, 0.4811170153835967]  
+EUBCF_mark = [0.14066459697956263, 0.21230164694397652, 0.33470251974230564, 0.4038648160629623, 0.4493999671876567, 0.48156424552898613]
+IBCF_mark= [0.11756814892253506, 0.17879180579647502, 0.2922971752563138, 0.3576642831100127, 0.40117318024713644, 0.43221573817703535]
+SVD_mark= [0.11140074344644169, 0.1698476933732543, 0.2837383696174275, 0.3500839890797717, 0.3942008755972378, 0.42532810160020024]
+
+import matplotlib.pyplot as plt
+import recmetrics
+
+mark_scores = [UBCF_mark, EUBCF_mark, IBCF_mark, SVD_mark]
+index = [3, 5, 10, 15, 20, 25]
+names = ['UBCF_mark ', 'EUBCF_mark', 'IBCF_mark','SVD_mark']
+
+fig = plt.figure(figsize=(15, 7))
+recmetrics.mark_plot(mark_scores, model_names=names, k_range=index)
+
+
+# In[10]:
+
+
+
+### compare the precision-recall curves for the four algorithms
+
+UBCF_pk= [0.8384615384615385,0.8073846153846151,0.7182393162393163,0.6416410256410257,0.5794358974358974,0.5281367521367522]
+EUBCF_pk= [0.839113844751979,0.8086451392448317,0.7190500597983941,0.642120849706703,0.5800529642918162,0.5284947889970956]
+IBCF_pk = [0.8398285019517501,0.814244576694183,0.7363985409867538,0.6633646893197671,0.6017277788443081,0.5507544634286812]
+SVD_pk = [0.8370383867832848,0.8008381924198251, 0.7230685131195335,0.6502551020408164,0.589868804664723,0.5387536443148688]
+
+UBCF_rk= [0.18928999496655288, 0.2903662916533535,0.4514202718601649,0.5412818543560655,0.599401258940866, 0.6398395613441173]
+EUBCF_rk = [0.18947374196073732,0.2910580020580237,0.45211140014948753,0.5420068254067377,0.6002578291338428,0.6406095432535411]
+IBCF_rk= [0.16363236888432225, 0.2573741200121947, 0.41696645676100463, 0.5067998776745157,0.56469317538384,0.6052104315428373]
+SVD_rk= [0.15912153646824564,0.24828499871677698, 0.41049209297472755,0.5017031185641895, 0.5616875528777405,0.6027776553052919]
+
+
+ 
+import matplotlib.pyplot as plt
+import numpy as np
+ 
+x=np.arange(50)
+ 
+fig=plt.figure()
+ax=fig.add_subplot(111)
+
+top_n = [3, 5,10,15,20, 25]
+    
+ax.plot(UBCF_rk, UBCF_pk, c='k',marker="o",ls='-', label='UBCF', fillstyle='none')
+ax.plot(EUBCF_rk, EUBCF_pk, c='r',  ls='-', label='EUBCF')
+ax.plot(IBCF_rk, IBCF_pk, c='b',marker="s", ls='-', label='IBCF')
+ax.plot(SVD_rk,SVD_pk, c='g', marker="v", ls='-', label='SVD')
+
+plt.xlim(0.15, 0.7)
+plt.ylim(0.4, 0.9)
+plt.xlabel('recall')
+plt.ylabel('precision')
+plt.legend(loc=1)
+
+for n,x,y in zip(top_n,IBCF_rk, IBCF_pk):
+    
+    plt.annotate(n, xy=(x,y), textcoords="offset points", xytext=(0,10), ha='center')
+
+
+plt.show()
+
+
+# In[11]:
+
+
+
+### compare the precision-recall curves for the four algorithms
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+
+#
+UBCF_fpr = [0.06311848260214248, 0.11552305915760032,0.24384124825105705,0.3243758353209786,0.37781489141861946,0.416662053129323]
+UBCF_tpr = [0.18928999496655288,0.2903662916533535, 0.4514202718601649,0.5412818543560655, 0.599401258940866, 0.6398395613441173]
+
+
+EUBCF_fpr = [0.06293915370280194,0.11535268383580331,0.2442568759757031,0.3244593192483698,0.37794612920803844,0.4171234891087252]
+EUBCF_tpr = [0.18947374196073732,0.2910580020580237,0.45211140014948753,0.5420068254067377,0.6002578291338428,0.6406095432535411]
+
+IBCF_fpr = [0.06543405943567243,0.11984544304308827,0.2545274966747844,0.3416035525356808,0.4044174997076484,0.4513482322315674]
+IBCF_tpr = [0.16363236888432225,0.2573741200121947, 0.41696645676100463, 0.5067998776745157,0.56469317538384, 0.6052104315428373]
+
+
+SVD_fpr = [0.062445885694766966,0.12444858480671003,0.27043653483896074,0.36401092607489133,0.4277190658037949,0.47422127553440657]
+SVD_tpr = [0.15912153646824564,0.24828499871677698,0.41049209297472755, 0.5017031185641895, 0.5616875528777405,0.6027776553052919]
+
+ 
+
+top_n = [3, 5,10,15,20, 25]
+
+
+#x=np.arange(6)
+ 
+fig=plt.figure()
+ax=fig.add_subplot(111)
+
+
+ax.plot( UBCF_fpr, UBCF_tpr, c='k',marker="o",ls='--', label='UBCF', fillstyle='none')
+ax.plot(EUBCF_fpr , EUBCF_tpr , c='r',  ls='-', label='EUBCF')
+ax.plot(IBCF_fpr, IBCF_tpr, c='b',marker="s", ls='-', label='IBCF')
+ax.plot(SVD_fpr,SVD_tpr, c='g', marker="v", ls='-', label='SVD')
+plt.xlim(0.05, 0.6)
+plt.ylim(0.05, 0.7)
+plt.xlabel('fpr')
+plt.ylabel('tpr')
+plt.legend(loc=4)
+
+for n,x,y in zip(top_n,UBCF_fpr,UBCF_tpr):
+    
+    plt.annotate(n, xy=(x,y), textcoords="offset points", xytext=(0,10), ha='center')
+
+
+plt.show()
+
+
+# In[ ]:
+
+
+
+
